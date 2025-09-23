@@ -2,155 +2,237 @@
 
 ![Banner](https://i.postimg.cc/QdV16pcB/IMG-4837.jpg)  
 
-Badges:  
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)  
-![Build](https://img.shields.io/badge/build-passing-brightgreen)  
-![Coverage](https://img.shields.io/badge/coverage-85%25-yellowgreen)  
-![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red)  
-![Stripe](https://img.shields.io/badge/payments-Stripe-blueviolet)  
-![Crypto](https://img.shields.io/badge/payments-Crypto-orange)  
-![Uptime](https://img.shields.io/badge/uptime-99.9%25-brightgreen)  
-![Monitoring](https://img.shields.io/badge/monitoring-enabled-green)  
+Perfect — here’s the full README.md for your vanta-platform repo, with no code block markers so you can just copy-paste directly into GitHub:
 
----
+⸻
 
-## 📑 Table of Contents  
-- [Overview](#-overview)  
-- [Purpose](#-purpose)  
-- [Subscription & Monetization](#-subscription--monetization)  
-- [Dashboard Layer](#-dashboard-layer)  
-- [Telegram & Signal Delivery](#-telegram--signal-delivery)  
-- [API & Integrations](#-api--integrations)  
-- [User Tiers](#-user-tiers)  
-- [Compliance & Security](#-compliance--security)  
-- [README ↔ Server Mapping](#-readme--server-mapping)  
-- [Roadmap](#-roadmap)  
-- [Final Notes](#-final-notes)  
+VANTA Platform – Subscriptions, Tiers & Monetization Engine 💳📊
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/Stripe-Integrated-blue" />
+  <img src="https://img.shields.io/badge/Crypto-BTCPay%20Enabled-orange" />
+  <img src="https://img.shields.io/badge/Subscriptions-Live%20Billing-green" />
+  <img src="https://img.shields.io/badge/Referrals-Affiliate%20Enabled-purple" />
+  <img src="https://img.shields.io/badge/Dashboard-Next.js%20Internal-lightgrey" />
+</p>
 
-## 🔎 Overview  
 
-The **VANTA Platform** is the **ecosystem + monetization layer** built on top of `VANTA OS`.  
-Where the OS ingests → reasons → allocates → executes, the Platform exposes those decisions via:  
 
-- **Subscriptions** (Stripe, crypto, mirroring fees)  
-- **Dashboards** (Next.js, heatmaps, DAG explorers)  
-- **Bots** (Telegram, Discord, Slack)  
-- **APIs** (REST + WebSocket)  
-- **Tiers** (Retail, Pro, Institutional)  
-- **Compliance** (RBAC, audit logs, kill switches)  
+⸻
 
----
+📑 Table of Contents
+	•	Overview
+	•	Tier Matrix
+	•	Core Services
+	•	Data Model
+	•	Payment Flows
+	•	Entitlements
+	•	Referrals & Affiliates
+	•	Integrations
+	•	API Design
+	•	Security & Compliance
+	•	Observability & Ops
+	•	Deployment
+	•	Scalability & Anti-Fraud
+	•	Accounting & Vault Contributions
+	•	Testing & QA
+	•	Example Flow
+	•	MVP Deliverables
 
-## 🎯 Purpose  
+⸻
 
-- **Monetize** AI signals and vault mirroring.  
-- **Deliver** real-time insights via dashboards, APIs, and bots.  
-- **Govern** user access with tiered RBAC.  
-- **Scale** from retail subscriptions to institutional white-label integrations.  
+🔎 Overview
 
----
+VANTA Platform powers subscriptions, billing, entitlements, referrals, and capital-linked vault contributions.
+Client apps (Web, Mobile, Discord, Telegram) talk to a Gateway API → Auth → Billing → Entitlements → Referral → Notifications.
+Backed by Postgres, Redis, Kafka, Vault, and Stripe/BTCPay, every transaction is auditable, replayable, and tied into Vault allocations.
 
-## 💰 Subscription & Monetization  
+⸻
 
-- **Stripe (Fiat)**  
-  - `/opt/vanta/platform/stripe_webhook.py` — checkout, cancel, renewals.  
-  - Audit log → `stripe_webhook.log`.  
+🎯 Tier Matrix
 
-- **Crypto Payments**  
-  - `/opt/vanta/platform/crypto_payments.py` — USDC/DAI rails, Coinbase/Binance adapters.  
+Free
+	•	10 signals/day (T+15m delay)
+	•	Basic Discord/Telegram access
 
-- **Vault Mirroring Fees**  
-  - Defined in `vault.json → mirroring`.  
-  - Supports flat, performance share, or hybrid.  
+Core – $9/mo
+	•	100 signals/day
+	•	Private Telegram/Discord
+	•	Basic API access
 
----
+Pro – $49/mo
+	•	1000 signals/day
+	•	Autotrade sandbox
+	•	Webhooks + API keys
+	•	Priority support
 
-## 📊 Dashboard Layer  
+VIP – $199/mo
+	•	Live autotrade execution
+	•	Multi-broker support
+	•	Vault mirror reporting
+	•	Daily PnL reports
 
-- **Framework** → Next.js + TailwindCSS  
-- **Modules**:  
-  - `heatmap.js` → conviction heatmaps  
-  - `pnl_curve.js` → compounding curves  
-  - `audit_explorer.js` → replay DAGs  
+Enterprise – Custom
+	•	SSO, dedicated SLAs
+	•	On-prem connector
+	•	White-label feeds
 
-Retail → simple PnL snapshots  
-Pro → persona overlays, multi-vault view  
-Institutional → shadow/live comparisons + compliance packs  
+Add-ons
+	•	Extra API quota
+	•	Historical backfill
+	•	MirrorVault (vault-linked)
+	•	Seats / consulting
 
----
+⸻
 
-## 📲 Telegram & Signal Delivery  
+🏗 Core Services
+	•	API Gateway – WAF, TLS, JWT validation, rate limiting
+	•	Auth – OAuth2, passwordless, SAML/OIDC for enterprise
+	•	Billing – Stripe/BTCPay orchestration, proration, invoices
+	•	Entitlements – Central feature gating, Redis-cached
+	•	Referral & Affiliate – Invite codes, affiliate payouts, fraud checks
+	•	Payments Reconciliation – Stripe ledger reconciliation
+	•	Autotrade Executor – Broker execution (Alpaca, Tradier, Coinbase)
+	•	Notifications – Email (SES), push (APNs/FCM), Discord, Telegram, Slack
+	•	Analytics Dashboard – MRR, churn, referrals, Vault contributions
+	•	Fraud & Risk – Detect chargeback/fraud, referral farming, VPN abuse
 
-- `/opt/vanta/platform/telegram_bot.py`  
-- Adapters: Discord (`discord_adapter.py`), Slack (`slack_adapter.py`)  
-- Modes:  
-  - Conviction alerts  
-  - Daily snapshots  
-  - GPT rationales (“why we took this trade”)  
+⸻
 
----
+🗂 Data Model
 
-## 🔌 API & Integrations  
+users
+	•	id, email, stripe_customer_id, referral_code, referred_by
 
-- **REST**  
-  - `/signals` → conviction vectors  
-  - `/vaults` → allocations + overlays  
-  - `/mirror/feed` → mirroring intents  
+subscriptions
+	•	id, user_id, tier, status, started_at, next_billing_date
 
-- **WebSocket**  
-  - `/ws/signals` → real-time streams  
-  - `/ws/executions` → live broker fills  
-  - Latency <250ms via Redis pub/sub  
+billing_ledger
+	•	id, user_id, amount_cents, type (charge/refund/vault_contribution)
 
----
+entitlements
+	•	user_id, feature, quota, expiry
 
-## 🧑‍🤝‍🧑 User Tiers  
+referrals
+	•	referrer_id, referee_id, coupon_code, credited
 
-Defined in `/opt/vanta/platform/tiers.json`:  
+affiliates
+	•	affiliate_id, payout_rate, balance
 
-- **Retail** → Telegram only, 1 vault, $99/month  
-- **Pro** → Dashboard, multi-vault, API access, $499/month  
-- **Institutional** → SLA, white-label, performance fee (20% of PnL)  
+events
+	•	webhook events (Stripe, BTCPay, broker callbacks)
 
----
+⸻
 
-## 🔐 Compliance & Security  
+💳 Payment Flows
+	1.	Checkout – Client calls POST /v1/billing/checkout-session with tier & addons → Stripe Checkout session created.
+	2.	Webhooks – Stripe → checkout.session.completed → invoice.paid → subscription.created → Billing Service updates DB + ledger.
+	3.	Proration/Upgrades – Stripe subscription.update with proration rules.
+	4.	Refunds/Disputes – Stripe disputes trigger Fraud Service → account hold.
+	5.	BTCPay – crypto invoices flow into reconciliation → entitlements unlocked after confirmations.
 
-- **RBAC**: Enforced at API + dashboard  
-- **Audit Logs**:  
-  - `audit_subscriptions.log`  
-  - `mirror_dispatch.log`  
-- **Kill Switches**:  
-  - Global: vault overlay freeze  
-  - Per-follower: disable mirroring instantly  
-- **Governance**: FINRA/SEC overlays, crypto AML/KYC  
+⸻
 
----
+🔑 Entitlements
+	•	Entitlements Service caches tier features in Redis.
+	•	SDK/gateway validates access before feeds, autotrade, or dashboard access.
+	•	JWT “ent” claims embed tier + quota for high-throughput services.
 
-## 📂 README ↔ Server Mapping  
+⸻
 
-- **Subscriptions** → `/stripe_webhook.py`, `/crypto_payments.py`  
-- **Dashboards** → `/heatmap.js`, `/pnl_curve.js`, `/audit_explorer.js`  
-- **Bots** → `/telegram_bot.py`, `/discord_adapter.py`, `/slack_adapter.py`  
-- **APIs** → `/rest_api.py`, `/ws_api.py`  
-- **Compliance** → `/audit_subscriptions.log`, `/mirror_dispatch.log`  
+🤝 Referrals & Affiliates
+	•	Referral codes generate Stripe coupons.
+	•	Referrer gets credit or % revenue share.
+	•	Affiliates tracked with links (?aff=AFF123) and payouts via Stripe Connect.
+	•	Fraud detection: velocity checks, shared payment methods, VPNs, disposable emails.
 
----
+⸻
 
-## 🚀 Roadmap  
+📡 Integrations
+	•	Discord Bot – assigns VIP roles on subscription activation.
+	•	Telegram Bot – gated channels, premium alerts.
+	•	Slack/Webhooks – enterprise notifications.
+	•	Email – SES with templates for invoices, trials, and renewals.
 
-- Add WhatsApp adapter (LATAM/EU demand)  
-- Support Solana & ETH rails for USDC  
-- Tier-4 Quant API (direct DAG access)  
-- White-label Pro dashboards  
+⸻
 
----
+🔌 API Design
+	•	Auth – /v1/auth/login, /v1/auth/refresh
+	•	Billing – /v1/billing/checkout-session, /v1/billing/change-plan
+	•	Entitlements – /v1/entitlements/{user_id}
+	•	Referral – /v1/referral/invite, /v1/referral/stats/{user_id}
+	•	Webhooks – /v1/webhooks/stripe, /v1/webhooks/btcpay
 
-## 🏁 Final Notes  
+⸻
 
-VANTA OS is the engine.  
-VANTA Platform is the **ecosystem + business system**.  
+🔐 Security & Compliance
+	•	PCI-DSS compliant (Stripe/BTCPay handle cards).
+	•	TLS 1.3 everywhere, Vault for secrets.
+	•	Role-based access control across services.
+	•	GDPR-ready: export + delete endpoints.
+	•	Immutable logs for billing & entitlement changes.
 
-Together → **Autonomous Capital Intelligence Stack**  
+⸻
+
+📊 Observability & Ops
+	•	Metrics – Prometheus + Grafana (MRR, churn, latency).
+	•	Tracing – OpenTelemetry (Jaeger).
+	•	Logging – ELK/Loki + Sentry.
+	•	On-call – PagerDuty + runbooks for webhook/billing failures.
+
+⸻
+
+🚀 Deployment
+	•	Kubernetes (EKS/GKE/AKS).
+	•	Postgres (HA), Redis cluster, Kafka backbone.
+	•	S3 for historical data.
+	•	GitHub Actions CI/CD → Helm charts → canary deployments.
+
+⸻
+
+🛡 Scalability & Anti-Fraud
+	•	Kafka decouples billing, notifications, and ledger reconciliation.
+	•	Redis caching for entitlement checks.
+	•	Rate limiting per tier (Free: 10rpm, Pro: 300rpm, VIP: 2000rpm).
+	•	Risk scoring pipeline: device fingerprints, signup velocity, referral abuse detection.
+
+⸻
+
+📒 Accounting & Vault Contributions
+	•	Every subscription payment generates a vault_contribution ledger entry.
+	•	Vault Service consumes entries → updates vault.json and pnl_summary.json.
+	•	UI dashboards expose compounding curves and audited allocation reports.
+
+⸻
+
+🧪 Testing & QA
+	•	Integration tests with Stripe test keys.
+	•	End-to-end: checkout → webhook → entitlement → gated feature access.
+	•	Chaos testing: webhook loss, replay, DB failover.
+	•	Annual PCI audit + pen tests.
+
+⸻
+
+📈 Example Flow (VIP purchase via referral)
+	1.	User signs up with referral code.
+	2.	Chooses VIP → Stripe Checkout → session completed.
+	3.	Stripe webhook → Billing Service updates subscriptions.
+	4.	Referral Service marks referral credited → applies credit to referrer.
+	5.	Entitlements updated → Redis cache refresh.
+	6.	Discord bot assigns VIP role.
+	7.	Vault contribution logged in ledger + pnl_summary.json.
+
+⸻
+
+🏁 MVP Deliverables
+	•	Auth + UserProfile Service
+	•	Billing Service (Stripe Checkout + webhooks)
+	•	Entitlements Service with Redis cache
+	•	Referral Service with coupon integration
+	•	Discord/Telegram bot integrations
+	•	Basic analytics dashboard (MRR, churn, referrals)
+	•	Observability (Prometheus + Sentry)
+
+⸻
+
+Would you like me to also generate a matching LICENSE file for vanta-platform (like we did for vanta-os) so your repo looks consistent?Together → **Autonomous Capital Intelligence Stack**  
