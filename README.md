@@ -4,15 +4,16 @@
 
 ⸻
 
+
 VANTA Platform – Subscriptions, Tiers & Monetization Engine 💳📊
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Stripe-Integrated-blue" />
-  <img src="https://img.shields.io/badge/Crypto-BTCPay%20Enabled-orange" />
-  <img src="https://img.shields.io/badge/Subscriptions-Live%20Billing-green" />
-  <img src="https://img.shields.io/badge/Referrals-Affiliate%20Enabled-purple" />
-  <img src="https://img.shields.io/badge/Dashboard-Next.js%20Internal-lightgrey" />
-</p>
+<p align="center">  
+  <img src="https://img.shields.io/badge/Stripe-Integrated-blue" />  
+  <img src="https://img.shields.io/badge/Crypto-BTCPay%20Enabled-orange" />  
+  <img src="https://img.shields.io/badge/Subscriptions-Live%20Billing-green" />  
+  <img src="https://img.shields.io/badge/Referrals-Affiliate%20Enabled-purple" />  
+  <img src="https://img.shields.io/badge/Dashboard-Next.js%20Internal-lightgrey" />  
+</p>  
 
 
 
@@ -41,9 +42,7 @@ VANTA Platform – Subscriptions, Tiers & Monetization Engine 💳📊
 
 🔎 Overview
 
-VANTA Platform powers subscriptions, billing, entitlements, referrals, and capital-linked vault contributions.
-Client apps (Web, Mobile, Discord, Telegram) talk to a Gateway API → Auth → Billing → Entitlements → Referral → Notifications.
-Backed by Postgres, Redis, Kafka, Vault, and Stripe/BTCPay, every transaction is auditable, replayable, and tied into Vault allocations.
+VANTA Platform powers subscriptions, billing, entitlements, referrals, and vault-linked capital contributions. Client apps (Web, Mobile, Discord, Telegram) connect to a Gateway API → Auth → Billing → Entitlements → Referral → Notifications, backed by Postgres, Redis, Kafka, Vault, and Stripe/BTCPay. Every transaction is auditable, replayable, and tied into Vault allocations.
 
 ⸻
 
@@ -81,153 +80,159 @@ Add-ons
 	•	MirrorVault (vault-linked)
 	•	Seats / consulting
 
+Referral & Affiliate
+	•	Referrals: invite → discounts + credits
+	•	Affiliates: recurring % of revenue, tracked via coupon/links
+
 ⸻
 
 🏗 Core Services
-	•	API Gateway – WAF, TLS, JWT validation, rate limiting
-	•	Auth – OAuth2, passwordless, SAML/OIDC for enterprise
-	•	Billing – Stripe/BTCPay orchestration, proration, invoices
-	•	Entitlements – Central feature gating, Redis-cached
-	•	Referral & Affiliate – Invite codes, affiliate payouts, fraud checks
-	•	Payments Reconciliation – Stripe ledger reconciliation
-	•	Autotrade Executor – Broker execution (Alpaca, Tradier, Coinbase)
-	•	Notifications – Email (SES), push (APNs/FCM), Discord, Telegram, Slack
-	•	Analytics Dashboard – MRR, churn, referrals, Vault contributions
-	•	Fraud & Risk – Detect chargeback/fraud, referral farming, VPN abuse
+	•	API Gateway → WAF, TLS, JWT validation, rate limiting
+	•	Auth Service → OAuth2, passwordless, SAML/OIDC for enterprise
+	•	Billing Service → Stripe/BTCPay orchestration, proration, invoices, refunds
+	•	Entitlements Service → central feature gating, Redis cache
+	•	Referral & Affiliate Service → invite codes, payouts, fraud checks
+	•	Payments Reconciliation → Stripe ledger reconciliation jobs
+	•	Autotrade Executor → broker execution (Alpaca, Tradier, Coinbase)
+	•	Notifications → Email (SES), push (APNs/FCM), Discord, Telegram, Slack
+	•	Analytics Dashboard → MRR, churn, referrals, Vault contributions
+	•	Fraud & Risk Service → detects chargebacks, referral farming, VPN/disposable abuse
 
 ⸻
 
-🗂 Data Model
+🗂 Data Model (Postgres)
 
 users
-	•	id, email, stripe_customer_id, referral_code, referred_by
+	•	id, email, stripe_customer_id, referral_code, referred_by, created_at
 
 subscriptions
 	•	id, user_id, tier, status, started_at, next_billing_date
 
 billing_ledger
-	•	id, user_id, amount_cents, type (charge/refund/vault_contribution)
+	•	id, user_id, amount_cents, currency, type (charge/refund/vault_contribution), metadata
 
 entitlements
-	•	user_id, feature, quota, expiry
+	•	id, user_id, feature, quota, expires_at, metadata
 
 referrals
-	•	referrer_id, referee_id, coupon_code, credited
+	•	id, referrer_id, referee_id, coupon_code, credited
 
 affiliates
-	•	affiliate_id, payout_rate, balance
+	•	id, affiliate_id, payout_rate, balance, status
 
 events
-	•	webhook events (Stripe, BTCPay, broker callbacks)
+	•	id, source, event_type, payload, processed
 
 ⸻
 
 💳 Payment Flows
-	1.	Checkout – Client calls POST /v1/billing/checkout-session with tier & addons → Stripe Checkout session created.
-	2.	Webhooks – Stripe → checkout.session.completed → invoice.paid → subscription.created → Billing Service updates DB + ledger.
-	3.	Proration/Upgrades – Stripe subscription.update with proration rules.
-	4.	Refunds/Disputes – Stripe disputes trigger Fraud Service → account hold.
-	5.	BTCPay – crypto invoices flow into reconciliation → entitlements unlocked after confirmations.
+	1.	Checkout → client calls POST /v1/billing/checkout-session with {tier, addons, referral_code}. Billing Service creates Stripe Checkout session, returns session_id.
+	2.	Webhooks → Stripe emits checkout.session.completed → invoice.paid. Billing Service updates subscriptions table + ledger.
+	3.	Upgrades / Proration → handled via Stripe subscription.update.
+	4.	Refunds / Disputes → Stripe dispute triggers Fraud Service, subscription frozen.
+	5.	Crypto / BTCPay → invoices confirmed → webhook updates ledger + entitlements.
 
 ⸻
 
 🔑 Entitlements
-	•	Entitlements Service caches tier features in Redis.
-	•	SDK/gateway validates access before feeds, autotrade, or dashboard access.
-	•	JWT “ent” claims embed tier + quota for high-throughput services.
+	•	Entitlements Service centralizes checks (tier, quotas, addons).
+	•	Redis cache for sub-10ms retrieval.
+	•	JWT “ent” claims embed tier and quota to gate high-throughput endpoints.
 
 ⸻
 
 🤝 Referrals & Affiliates
-	•	Referral codes generate Stripe coupons.
-	•	Referrer gets credit or % revenue share.
-	•	Affiliates tracked with links (?aff=AFF123) and payouts via Stripe Connect.
-	•	Fraud detection: velocity checks, shared payment methods, VPNs, disposable emails.
+	•	Referrals → invite code generates Stripe coupon; referrer earns credit or % share.
+	•	Affiliates → tracked via URLs (?aff=AFF123), payouts via Stripe Connect.
+	•	Fraud Prevention → velocity checks, device/IP fingerprinting, payment reuse detection.
 
 ⸻
 
 📡 Integrations
-	•	Discord Bot – assigns VIP roles on subscription activation.
-	•	Telegram Bot – gated channels, premium alerts.
-	•	Slack/Webhooks – enterprise notifications.
-	•	Email – SES with templates for invoices, trials, and renewals.
+	•	Discord Bot → assigns VIP role on subscription activation.
+	•	Telegram Bot → gated channels + premium DMs.
+	•	Slack/Webhooks → enterprise alerts.
+	•	Email → SES for invoices, trials, renewals.
 
 ⸻
 
 🔌 API Design
-	•	Auth – /v1/auth/login, /v1/auth/refresh
-	•	Billing – /v1/billing/checkout-session, /v1/billing/change-plan
-	•	Entitlements – /v1/entitlements/{user_id}
-	•	Referral – /v1/referral/invite, /v1/referral/stats/{user_id}
-	•	Webhooks – /v1/webhooks/stripe, /v1/webhooks/btcpay
+	•	Auth → POST /v1/auth/login, POST /v1/auth/refresh
+	•	Billing → POST /v1/billing/checkout-session, POST /v1/billing/change-plan
+	•	Entitlements → GET /v1/entitlements/{user_id}, POST /v1/entitlements/refresh
+	•	Referral → POST /v1/referral/invite, GET /v1/referral/stats/{user_id}
+	•	Webhooks → POST /v1/webhooks/stripe, POST /v1/webhooks/btcpay
 
 ⸻
 
 🔐 Security & Compliance
-	•	PCI-DSS compliant (Stripe/BTCPay handle cards).
-	•	TLS 1.3 everywhere, Vault for secrets.
-	•	Role-based access control across services.
-	•	GDPR-ready: export + delete endpoints.
-	•	Immutable logs for billing & entitlement changes.
+	•	PCI-DSS → no card storage, Stripe/BTCPay handle payments.
+	•	TLS 1.3 everywhere.
+	•	Secrets in Vault.
+	•	Append-only immutable logs.
+	•	GDPR: export + delete supported.
+	•	2FA optional for VIP + admin.
 
 ⸻
 
 📊 Observability & Ops
-	•	Metrics – Prometheus + Grafana (MRR, churn, latency).
-	•	Tracing – OpenTelemetry (Jaeger).
-	•	Logging – ELK/Loki + Sentry.
-	•	On-call – PagerDuty + runbooks for webhook/billing failures.
+	•	Metrics → Prometheus + Grafana (MRR, churn, API latency).
+	•	Tracing → OpenTelemetry + Jaeger.
+	•	Logging → ELK or Loki, Sentry for alerts.
+	•	Runbooks → billing webhook failures, reconciliation mismatches.
 
 ⸻
 
 🚀 Deployment
-	•	Kubernetes (EKS/GKE/AKS).
-	•	Postgres (HA), Redis cluster, Kafka backbone.
-	•	S3 for historical data.
-	•	GitHub Actions CI/CD → Helm charts → canary deployments.
+	•	Kubernetes (EKS/GKE).
+	•	Postgres HA + replicas, Redis cluster, Kafka backbone.
+	•	S3 for history.
+	•	Cloudflare WAF/CDN.
+	•	GitHub Actions CI/CD → Helm charts → Canary releases.
 
 ⸻
 
 🛡 Scalability & Anti-Fraud
-	•	Kafka decouples billing, notifications, and ledger reconciliation.
-	•	Redis caching for entitlement checks.
-	•	Rate limiting per tier (Free: 10rpm, Pro: 300rpm, VIP: 2000rpm).
-	•	Risk scoring pipeline: device fingerprints, signup velocity, referral abuse detection.
+	•	Event-driven design (Kafka).
+	•	Redis caches entitlement checks.
+	•	Rate limits: Free 10rpm, Pro 300rpm, VIP 2000rpm.
+	•	Fraud checks: signup velocity, device/IP reuse, referral abuse detection.
 
 ⸻
 
 📒 Accounting & Vault Contributions
-	•	Every subscription payment generates a vault_contribution ledger entry.
-	•	Vault Service consumes entries → updates vault.json and pnl_summary.json.
-	•	UI dashboards expose compounding curves and audited allocation reports.
+	•	Each payment generates vault_contribution ledger entry.
+	•	Vault Service consumes → updates vault.json + pnl_summary.json.
+	•	Compounding + allocations visible in dashboards.
 
 ⸻
 
 🧪 Testing & QA
 	•	Integration tests with Stripe test keys.
-	•	End-to-end: checkout → webhook → entitlement → gated feature access.
-	•	Chaos testing: webhook loss, replay, DB failover.
-	•	Annual PCI audit + pen tests.
+	•	End-to-end: checkout → webhook → entitlement → access.
+	•	Chaos testing → webhook replay, DB failover.
+	•	PCI audit + pen tests yearly.
 
 ⸻
 
 📈 Example Flow (VIP purchase via referral)
 	1.	User signs up with referral code.
-	2.	Chooses VIP → Stripe Checkout → session completed.
+	2.	Chooses VIP → Stripe Checkout.
 	3.	Stripe webhook → Billing Service updates subscriptions.
-	4.	Referral Service marks referral credited → applies credit to referrer.
-	5.	Entitlements updated → Redis cache refresh.
+	4.	Referral Service credits referrer.
+	5.	Entitlements updated → Redis refresh.
 	6.	Discord bot assigns VIP role.
-	7.	Vault contribution logged in ledger + pnl_summary.json.
+	7.	Vault contribution logged.
 
 ⸻
 
 🏁 MVP Deliverables
 	•	Auth + UserProfile Service
 	•	Billing Service (Stripe Checkout + webhooks)
-	•	Entitlements Service with Redis cache
-	•	Referral Service with coupon integration
-	•	Discord/Telegram bot integrations
-	•	Basic analytics dashboard (MRR, churn, referrals)
-	•	Observability (Prometheus + Sentry)
+	•	Entitlements Service (Redis cache)
+	•	Referral Service with coupons
+	•	Discord/Telegram bots for role assignment
+	•	Analytics dashboard (MRR, churn, referrals)
+	•	Observability → Prometheus + Sentry
 
+⸻
