@@ -38,4 +38,16 @@ It’s about **Vaults** and **Mirroring** – a new operating system for capital
 🛠 *This repo will grow - for now, use it as a reference point to understand the vision.  
 The real story is already live inside VANTA’s vaults.*
 
-- [VANTA OS – Core Intelligence Engine](https://github.com/qstackfield/vanta-capital-intelligence-os)
+---
+
+## 🔗 Related Repositories  
+
+- **[VANTA OS – Core Intelligence Engine](https://github.com/qstackfield/vanta-capital-intelligence-os)**  
+  Low-latency ingestion, entity resolution, multi-model conviction scoring, and autonomous vault allocation.  
+  The backbone of the VANTA ecosystem: collectors, model ensembles, execution routers, and replayable audit DAGs.  
+
+- **[VANTA Platform – Subscriptions & Vault Mirroring](https://github.com/qstackfield/vanta-platform)**  
+  User-facing layer for onboarding, subscriptions, API entitlements, and **Vault Mirroring**.  
+  Handles billing, referral incentives, entitlement enforcement, and broker API integrations so followers can copy vaults seamlessly.  
+
+---
