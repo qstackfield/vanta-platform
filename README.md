@@ -1,102 +1,39 @@
-# VANTA OS – Autonomous Capital Intelligence Stack 📊🔐
+# ![VANTA OS Banner](https://i.postimg.cc/QdV16pcB/IMG-4837.jpg)
 
-<p align="center">
-  <img src="https://i.postimg.cc/QdV16pcB/IMG-4837.jpg" width="800"/>
-</p>
+# VANTA OS – Autonomous Capital Intelligence Stack 🔐📈
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10+-blue" />
-  <img src="https://img.shields.io/badge/Build-passing-brightgreen" />
-  <img src="https://img.shields.io/badge/Coverage-85%25-green" />
-  <img src="https://img.shields.io/badge/Dependencies-up%20to%20date-success" />
-  <img src="https://img.shields.io/badge/Code%20Style-black-black" />
-  <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-red" />
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Secure-By%20Design-blue" />
-  <img src="https://img.shields.io/badge/Audit-Immutable%20Logs-orange" />
-  <img src="https://img.shields.io/badge/Uptime-99.9%25-brightgreen" />
-  <img src="https://img.shields.io/badge/Monitoring-Enabled-blue" />
-  <img src="https://img.shields.io/badge/Drift%20Detection-<24h-red" />
-</p>
+VANTA OS isn’t about selling screenshots or “signals.”  
+It’s about **Vaults** and **Mirroring** – a new operating system for capital markets.
 
 ---
 
-## 📑 Table of Contents
-- [Overview](#overview)
-- [Vault Layer](#vault-layer)
-- [Execution Flow](#execution-flow)
-- [Revenue Engine](#revenue-engine)
-- [API Packet Onboarding](#api-packet-onboarding)
-- [Transparency & Auditability](#transparency--auditability)
-- [System Status](#system-status)
-- [Contributors](#contributors)
+## 🌌 What Makes VANTA Different?
+- **Vaults**: capital containers with encoded risk rails, allocations, and personas.  
+- **Mirroring**: followers connect their own broker accounts, not their money.  
+  - They mirror manager vaults in real time.  
+  - They keep custody — VANTA never touches user funds.  
+- **Capital-Aligned Fees**:  
+  - No flat “subscription.”  
+  - Fees come from performance share (% of PnL) or institutional flat fees.  
+  - Followers see **PnL vs Fees side-by-side** for transparency.  
 
 ---
 
-## 🔎 Overview
-VANTA OS is a **production-grade autonomous capital intelligence system**. Unlike “signal groups” or “screenshot scrapers,” VANTA is a **closed-loop execution OS**: signals → vaults → allocations → broker execution → replayable audit DAGs.
-
-- **Mirrored Vaults** → Users don’t “copy trades” — they connect broker APIs and VANTA mirrors vault allocations deterministically.  
-- **Revenue model** → No “subscriptions for screenshots.” Fees are capital-aligned (performance share or flat).  
-- **Transparency** → Every order, fee, and realized PnL is auditable.
+## 🚀 Why This Matters
+- **Transparency** → every order, fee, and result is logged and auditable.  
+- **Alignment** → we only win if followers win.  
+- **Future-Proof** → cross-asset vaults (equities, crypto, fiat) built for scale.  
+- **Custody-Safe** → no pooled funds, no screenshots, no hype. Just mirrored execution.  
 
 ---
 
-## 🔐 Vault Layer
-Authoritative JSONs live in `/opt/vanta/memory/`:
-- `vault.json` → global vault registry & defaults  
-- `vault_overlay.json` → runtime modifiers (flip mode, persona boosts, maintenance)  
-- `vault_allocation.json` → target weights (intent)  
-- `portfolio.json` → broker holdings (truth)  
-- `pnl_summary.json` → realized & MTM PnL  
-- `autotrade_queue.json` → staged orders for execution  
+## 📑 Coming Soon
+- API packet onboarding (drop your broker keys + preferences, mirror instantly).  
+- Multi-vault persona strategies (e.g., Athena, Apollo, Ares).  
+- Capital-aligned dashboards and live audit feeds.  
+- Enterprise connectors and partner vaults.  
 
-**Design Rule:** Allocation drives intent → portfolio drives truth → queues bridge the two.
+---
 
-### Example `vault.json`
-```json
-{
-  "vaults": [
-    {
-      "vault_id": "V_CORE",
-      "label": "Core Discretionary",
-      "base_currency": "USD",
-      "crypto_enabled": true,
-      "fiat_enabled": true,
-      "personas": ["risk_averse","contrarian","aggressive"],
-      "risk": {
-        "max_drawdown": 0.12,
-        "max_single_pos_pct": 0.08
-      },
-      "mirroring": {
-        "mode": "proportional",
-        "min_account_equity": 5000,
-        "fee": {
-          "type": "performance_or_flat",
-          "flat_usd": 2000,
-          "perf_share": 0.20
-        }
-      }
-    }
-  ]
-}
-## ⚡ Execution Flow
-
-Mermaid sequence: signal → vault → broker
-
-```mermaid
-sequenceDiagram
-  participant Signals
-  participant Vault
-  participant Executor
-  participant Broker
-  participant Follower
-
-  Signals->>Vault: conviction_score.json
-  Vault->>Executor: vault_allocation.json
-  Executor->>Broker: autotrade_queue.json
-  Broker->>Follower: child orders filled
-  Executor->>Vault: update portfolio.json
-  Vault->>Ledger: write pnl_summary.json
+🛠 *This repo will grow — for now, use it as a reference point to understand the vision.  
+The real story is already live inside VANTA’s vaults.*
