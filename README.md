@@ -11,7 +11,7 @@ It’s about **Vaults** and **Mirroring** – a new operating system for capital
 - **Vaults**: capital containers with encoded risk rails, allocations, and personas.  
 - **Mirroring**: followers connect their own broker accounts, not their money.  
   - They mirror manager vaults in real time.  
-  - They keep custody — VANTA never touches user funds.  
+  - They keep custody - VANTA never touches user funds.  
 - **Capital-Aligned Fees**:  
   - No flat “subscription.”  
   - Fees come from performance share (% of PnL) or institutional flat fees.  
