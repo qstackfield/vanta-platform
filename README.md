@@ -1,6 +1,6 @@
 # ![VANTA OS Banner](https://i.postimg.cc/QdV16pcB/IMG-4837.jpg)
 
-# VANTA OS - Autonomous Capital Intelligence Stack 🔐📈
+# VANTA OS - Autonomous Capital Intelligence Stack 📈
 
 VANTA OS isn’t about selling screenshots or “signals.”  
 It’s about **Vaults** and **Mirroring** – a new operating system for capital markets.
