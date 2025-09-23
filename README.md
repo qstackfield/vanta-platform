@@ -82,3 +82,21 @@ Authoritative JSONs live in `/opt/vanta/memory/`:
     }
   ]
 }
+## ⚡ Execution Flow
+
+Mermaid sequence: signal → vault → broker
+
+```mermaid
+sequenceDiagram
+  participant Signals
+  participant Vault
+  participant Executor
+  participant Broker
+  participant Follower
+
+  Signals->>Vault: conviction_score.json
+  Vault->>Executor: vault_allocation.json
+  Executor->>Broker: autotrade_queue.json
+  Broker->>Follower: child orders filled
+  Executor->>Vault: update portfolio.json
+  Vault->>Ledger: write pnl_summary.json
