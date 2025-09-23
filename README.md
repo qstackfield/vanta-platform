@@ -37,3 +37,5 @@ It’s about **Vaults** and **Mirroring** – a new operating system for capital
 
 🛠 *This repo will grow - for now, use it as a reference point to understand the vision.  
 The real story is already live inside VANTA’s vaults.*
+
+- [VANTA OS – Core Intelligence Engine](https://github.com/qstackfield/vanta-capital-intelligence-os)
