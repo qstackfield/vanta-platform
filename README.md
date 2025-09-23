@@ -2,8 +2,6 @@
 
 ![Banner](https://i.postimg.cc/QdV16pcB/IMG-4837.jpg)  
 
-Perfect — here’s the full README.md for your vanta-platform repo, with no code block markers so you can just copy-paste directly into GitHub:
-
 ⸻
 
 VANTA Platform – Subscriptions, Tiers & Monetization Engine 💳📊
@@ -233,6 +231,3 @@ events
 	•	Basic analytics dashboard (MRR, churn, referrals)
 	•	Observability (Prometheus + Sentry)
 
-⸻
-
-Would you like me to also generate a matching LICENSE file for vanta-platform (like we did for vanta-os) so your repo looks consistent?Together → **Autonomous Capital Intelligence Stack**  
