@@ -328,3 +328,27 @@ It guarantees proportionality, risk caps, retry policies, and replayable audit l
 - Followers get **provable fairness**: everyone sees the same proportional intent.  
 - Managers get **governance**: vault-level guardrails, persona overlays, kill-switch.  
 - Auditors get **immutability**: replayable DAG logs show the *exact path* of every mirrored order.  
+
+---
+## 🌐 Deep Crypto Awareness
+
+VANTA Platform is natively crypto-aware, bridging fiat and digital rails with deterministic execution logic.  
+It ensures smooth routing, minimal fees, and resilient cross-rail allocations.
+
+### 🔄 Bridging Logic
+When a target vault requires crypto execution but a follower is on fiat rails:
+1. Convert **USD → USDC** (fiat bridge).
+2. Place **crypto order** (BTC, ETH, or supported asset).
+3. Reconcile fills → update portfolio snapshot.
+
+### 💸 Fee Model
+- Venue-aware lookups choose the **cheapest execution path**.  
+- Compares **CEX vs direct spot** routes within latency SLOs.  
+- Optimized for both cost and speed.
+
+### 🪙 Stablecoin Buffer
+- Minimum buffer maintained in USDC to reduce churn.  
+- Configurable at vault-level for institutional followers.  
+- Protects against unnecessary conversions during high-frequency execution.
+
+---
