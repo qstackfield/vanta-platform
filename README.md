@@ -10,10 +10,10 @@
 
 ---
 
-<p align="center">
+<h1 align="center">
   <strong>VANTA Platform – Subscriptions & Vault Mirroring</strong><br>
   <em>The user-facing layer for governed, replayable autonomous capital.</em>
-</p>
+</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Build-passing-brightgreen" />
