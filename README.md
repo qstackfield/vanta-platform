@@ -4,8 +4,6 @@
 
 ## 👋 New to VANTA Platform?
 
-- ## 👋 New to VANTA Platform?
-
 - 🧠 Looking for the core intelligence engine? Visit the [VANTA OS Repository](https://github.com/qstackfield/vanta-capital-intelligence-os).  
 - 📖 Want the high-level overview of the whole project? Start with the [Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/).  
 - 💬 All design, roadmap, and Q&A are open → [Join the VANTA Discussions](../../discussions).  
