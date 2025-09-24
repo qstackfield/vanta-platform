@@ -38,7 +38,7 @@ Or contribute via **Bitcoin**:
 ## 👋 Introduction  
 
 VANTA Platform is the **user-facing control plane** for the VANTA ecosystem.  
-Where **VANTA OS** is the autonomous brain, **VANTA Platform** productizes it — turning vaults, mirroring, and governance into a **subscription-based, investor-ready service**.  
+Where **VANTA OS** is the autonomous brain, **VANTA Platform** productizes it - turning vaults, mirroring, and governance into a **subscription-based, investor-ready service**.  
 
 It handles:
 - Subscriptions & billing (Stripe + crypto)
