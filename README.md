@@ -1,47 +1,34 @@
-# ![VANTA OS Banner](https://i.postimg.cc/QdV16pcB/IMG-4837.jpg)
+<p align="center">
+  <img src="https://i.postimg.cc/QdV16pcB/IMG-4837.jpg" alt="VANTA Platform Banner" width="90%" />
+</p>
 
-# VANTA OS - Autonomous Capital Intelligence Stack 📈
+<p align="center">
+  <strong>VANTA Platform – Subscriptions & Vault Mirroring</strong><br>
+  <em>The user-facing layer for governed, replayable autonomous capital.</em>
+</p>
 
-VANTA OS isn’t about selling screenshots or “signals.”  
-It’s about **Vaults** and **Mirroring** – a new operating system for capital markets.
+<p align="center">
+  <img src="https://img.shields.io/badge/Build-passing-brightgreen" />
+  <img src="https://img.shields.io/badge/License-All%20Rights%20Reserved-red" />
+  <img src="https://img.shields.io/badge/Version-Platform%20v1.0-blue" />
+</p>
 
----
-
-## 🌌 What Makes VANTA Different?
-- **Vaults**: capital containers with encoded risk rails, allocations, and personas.  
-- **Mirroring**: followers connect their own broker accounts, not their money.  
-  - They mirror manager vaults in real time.  
-  - They keep custody - VANTA never touches user funds.  
-- **Capital-Aligned Fees**:  
-  - No flat “subscription.”  
-  - Fees come from performance share (% of PnL) or institutional flat fees.  
-  - Followers see **PnL vs Fees side-by-side** for transparency.  
-
----
-
-## 🚀 Why This Matters
-- **Transparency** → every order, fee, and result is logged and auditable.  
-- **Alignment** → we only win if followers win.  
-- **Future-Proof** → cross-asset vaults (equities, crypto, fiat) built for scale.  
-- **Custody-Safe** → no pooled funds, no screenshots, no hype. Just mirrored execution.  
+<p align="center">
+  <img src="https://img.shields.io/badge/Auth-OIDC%2FJWT-purple" />
+  <img src="https://img.shields.io/badge/Payments-Stripe%20%2B%20Crypto-green" />
+  <img src="https://img.shields.io/badge/Mirroring-Deterministic%20%2B%20Governed-orange" />
+</p>
 
 ---
 
-## 📑 Coming Soon
-- API packet onboarding (drop your broker keys + preferences, mirror instantly).  
-- Multi-vault persona strategies (e.g., Athena, Apollo, Ares).  
-- Capital-aligned dashboards and live audit feeds.  
-- Enterprise connectors and partner vaults.  
+## 🌟 Funding & Support
 
----
+Help fuel the next stage of **autonomous capital intelligence**.  
+Support development directly:
 
-🛠 *This repo will grow - for now, use it as a reference point to understand the vision.  
-The real story is already live inside VANTA’s vaults.*
+[![Strategic Partner](https://img.shields.io/badge/Strategic%20Partner-%F0%9F%8E%AF-blue?style=for-the-badge)](https://buy.stripe.com/eVqdR96ahdqIb69cSVbZe03)  
+[![Partner](https://img.shields.io/badge/Partner-%F0%9F%A4%9D-green?style=for-the-badge)](https://buy.stripe.com/cNi9AT56d5Yg4HL8CFbZe04)  
+[![Sponsor](https://img.shields.io/badge/Sponsor-%F0%9F%9A%80-purple?style=for-the-badge)](https://buy.stripe.com/7sY00jbuBaew3DHcSVbZe05)  
 
----
-
-## 🔗 Related Repositories  
-
-- **[VANTA OS – Core Intelligence Engine](https://github.com/qstackfield/vanta-capital-intelligence-os)**  
-  Low-latency ingestion, entity resolution, multi-model conviction scoring, and autonomous vault allocation.  
-  The backbone of the VANTA ecosystem: collectors, model ensembles, execution routers, and replayable audit DAGs.  
+Or contribute via **Bitcoin**:  
+`bc1qagw2a6zz2qck8kqaaxtpe0tv28n0fu9xm3c2e0`
