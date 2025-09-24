@@ -49,26 +49,29 @@ It handles:
 
 ---
 
-## 📑 Table of Contents
+## 📑 Table of Contents  
 
-- [🌌 Overview](#-overview)
-- [👥 Tenancy & Personas](#-tenancy--personas)
-- [🧩 Core Components](#-core-components)
-- [🗂 Data Model](#-data-model)
-- [📡 API Surface](#-api-surface)
-- [⚙️ Mirroring Orchestrator](#-mirroring-orchestrator)
-- [₿ Deep Crypto Awareness](#-deep-crypto-awareness)
-- [🔑 Entitlements & Plans](#-entitlements--plans)
-- [🔒 Security & Governance](#-security--governance)
-- [📊 Observability & SLOs](#-observability--slos)
-- [💾 Storage Layout](#-storage-layout)
-- [🚀 Deployment & Isolation](#-deployment--isolation)
-- [🛡️ Failure Modes & Guards](#-failure-modes--guards)
-- [🔗 File ↔ Repo Mapping](#-file-↔-repo-mapping)
-- [💰 Pricing & Monetization](#-pricing--monetization)
-- [🛠 Roadmap](#-roadmap)
-- [📚 Glossary](#-glossary)
-- [🔗 Related Repositories](#-related-repositories)
+- [👋 Introduction](#-introduction)  
+- [🌌 Overview](#-overview)  
+- [👥 Tenancy & Personas](#-tenancy--personas)  
+- [🧩 Platform Components](#-platform-components)  
+- [🗂 Data Model](#-data-model)  
+- [🔌 API Surface](#-api-surface)  
+- [🔄 Mirroring Orchestrator](#-mirroring-orchestrator-state-machine)  
+- [🌐 Deep Crypto Awareness](#-deep-crypto-awareness)  
+- [📜 Entitlements & Plans](#-entitlements--plans)  
+- [🔐 Security & Governance](#-security--governance)  
+- [📈 Observability & SLOs](#-observability--slos)  
+- [🗄️ Storage Layout](#-storage-layout-platform)  
+- [🚀 Deployment & Isolation](#-deployment--isolation)  
+- [🛡️ Failure Modes & Guards](#-failure-modes--guards)  
+- [🌍 Public Webhook & API Specs](#-public-webhook--api-specs)  
+- [🔄 End-to-End Mirroring](#-end-to-end-mirroring-manager--followers)  
+- [💰 Pricing & Monetization](#-pricing--monetization)  
+- [🛣️ Roadmap](#-roadmap)  
+- [📖 Glossary](#-glossary)  
+- [🚀 Why This Is From the Future](#-why-this-is-from-the-future)  
+- [🔗 Explore More](#-explore-more)  
 
 ---
 
