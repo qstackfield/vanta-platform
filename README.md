@@ -2,10 +2,12 @@
   <img src="https://i.postimg.cc/QdV16pcB/IMG-4837.jpg" alt="VANTA Platform Banner" width="90%" />
 </p>
 
-## 👋 New to VANTA?
+## 👋 New to VANTA Platform?
 
-- 📖 Start with the [Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/) for a high-level overview.  
-- 💻 Looking for subscriptions & vault mirroring? Go to the [VANTA Platform Repository](https://github.com/qstackfield/vanta-platform).  
+- ## 👋 New to VANTA Platform?
+
+- 🧠 Looking for the core intelligence engine? Visit the [VANTA OS Repository](https://github.com/qstackfield/vanta-capital-intelligence-os).  
+- 📖 Want the high-level overview of the whole project? Start with the [Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/).  
 - 💬 All design, roadmap, and Q&A are open → [Join the VANTA Discussions](../../discussions).  
 
 ---
