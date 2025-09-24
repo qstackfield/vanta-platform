@@ -10,8 +10,7 @@
 
 ---
 
-# VANTA Platform – Subscriptions & Vault Mirroring 📡
-
+# VANTA Platform - Subscriptions & Vault Mirroring 
 The **user-facing layer** for governed, replayable autonomous capital.
 
 <p align="center">
