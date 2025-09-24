@@ -132,17 +132,25 @@ The VANTA Platform is designed as a **multi-tenant control plane**, separating r
 
 ---
 
+---
+
 ## 🧩 Platform Components  
 
-The VANTA Platform control plane is built from modular services — each focused on one responsibility.  
+The VANTA Platform control plane is composed of modular services:  
 
-### High-Level Architecture  
+- **Web App (Next.js)** → user interface for onboarding, subscriptions, and dashboards.  
+- **API Gateway** → JWT verification, scopes, idempotency keys, and rate limiting.  
+- **AuthN/Z Service** → OIDC + RBAC for tenants, users, and followers.  
+- **Subscription & Billing Service** → Stripe integration (plans, upgrades, invoices, refunds).  
+- **Entitlements Service** → central feature flags (core, pro, institutional), cached in Redis.  
+- **Vault Registry Service** → authoritative vault metadata and follower bindings; references OS JSONs.  
+- **Mirroring Orchestrator** → expands manager orders into follower child orders, applies caps/scales.  
+- **Webhook Dispatcher** → HMAC-signed POSTs to followers; retries with backoff.  
+- **Broker Adapters** → direct adapters for Alpaca, Tradier, Coinbase, etc.  
+- **Event Bus (Kafka/NATS)** → async messaging backbone for mirroring events.  
+- **Storage Layer**:  
+  - Postgres → tenants, users, vaults, followers, audit logs.  
+  - Redis → idempotency keys and in-flight state.  
+  - S3/Minio → immutable artifacts, logs, and exports.  
 
-             ┌──────────────────────────┐
-             │        Web App (Next)    │
-             └─────────────┬────────────┘
-                           │
-                  ┌────────▼────────┐
-                  │  API Gateway    │  (OIDC/JWT, rate-limit, idempotency)
-                  └─────┬─────┬─────┘
-     ┌──────────────────┘     └───────────────────┐
+---
