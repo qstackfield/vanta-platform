@@ -8,6 +8,8 @@
 - 💻 Looking for subscriptions & vault mirroring? Go to the [VANTA Platform Repository](https://github.com/qstackfield/vanta-platform).  
 - 💬 All design, roadmap, and Q&A are open → [Join the VANTA Discussions](../../discussions).  
 
+---
+
 <p align="center">
   <strong>VANTA Platform – Subscriptions & Vault Mirroring</strong><br>
   <em>The user-facing layer for governed, replayable autonomous capital.</em>
