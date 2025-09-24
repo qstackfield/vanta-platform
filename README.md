@@ -352,3 +352,35 @@ When a target vault requires crypto execution but a follower is on fiat rails:
 - Protects against unnecessary conversions during high-frequency execution.
 
 ---
+
+---
+## 📜 Entitlements & Plans
+
+Access to VANTA Platform is gated through **subscription plans** and enforced by entitlements.  
+These entitlements are pushed as feature flags to the API/UI and verified server-side on every call.
+
+### 📦 Core Plan
+- 🔑 Access to **1 vault**  
+- 📊 **Proportional mirroring only**  
+- 🚫 No flip-mode  
+- 👀 Audit logs read-only  
+
+### 🚀 Pro Plan
+- 🔑 Access to **multiple vaults**  
+- 🎭 Persona boosts enabled  
+- 🔄 **Flip-mode follow** (short-TTL overlays)  
+- 📊 Replay dashboards for follower-level audits  
+
+### 🏦 Institutional Plan
+- 🛠️ Custom vault caps  
+- 📡 **Dedicated webhook signing keys**  
+- ⚡ Priority latency SLA  
+- 🔗 API pull feed (direct data integration)  
+- 👥 Multi-seat org onboarding  
+
+### ✅ Enforcement
+- Every entitlement is checked in the **Entitlement Service** before mirroring or API execution.  
+- Stored as `jsonb` in `subscriptions` table with feature-level granularity.  
+- Validated on every call — **no client-side trust**.  
+
+---
