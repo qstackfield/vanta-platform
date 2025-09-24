@@ -353,7 +353,6 @@ When a target vault requires crypto execution but a follower is on fiat rails:
 
 ---
 
----
 ## 📜 Entitlements & Plans
 
 Access to VANTA Platform is gated through **subscription plans** and enforced by entitlements.  
@@ -382,5 +381,39 @@ These entitlements are pushed as feature flags to the API/UI and verified server
 - Every entitlement is checked in the **Entitlement Service** before mirroring or API execution.  
 - Stored as `jsonb` in `subscriptions` table with feature-level granularity.  
 - Validated on every call — **no client-side trust**.  
+
+---
+---
+## 🔐 Security & Governance
+
+VANTA Platform is designed with **institutional-grade security** — every mirrored trade, webhook, and entitlement is protected and auditable.
+
+### 🔑 Authentication
+- **OIDC (Auth0/Okta/Keycloak)** for all tenants.  
+- Short-lived **JWT access tokens**, with refresh via OIDC flows.  
+- Scoped roles: `owner`, `ops`, `auditor`, `follower`.
+
+### 🛂 Authorization
+- **RBAC** (role-based access control) for tenant roles.  
+- **ABAC** (attribute-based access control) ensures vault-level + follower-level scoping.  
+- Persona overlays and flip-modes are enforced through entitlement checks.
+
+### 🔒 Secrets & Storage
+- **KMS / HashiCorp Vault** for all secret material.  
+- Configs hold only secret references — never raw credentials.  
+- Broker accounts stored as **opaque references** (never raw API keys in DB).
+
+### 📡 Webhook Security
+- All follower webhooks are **HMAC SHA-256 signed**.  
+- Signature = `sha256(secret, timestamp + "." + raw_body)`.  
+- Headers:  
+  - `X-Vanta-Signature`  
+  - `X-Vanta-Timestamp`  
+- Replay protection: **5-minute validity window**.
+
+### 🧾 Compliance & Audit
+- **Append-only audit logs** for all actions.  
+- Vaults, orders, and entitlements tied to immutable `audit_events`.  
+- Export-ready for regulators, external auditors, or institutional partners.  
 
 ---
