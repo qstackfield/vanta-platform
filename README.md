@@ -32,3 +32,42 @@ Support development directly:
 
 Or contribute via **Bitcoin**:  
 `bc1qagw2a6zz2qck8kqaaxtpe0tv28n0fu9xm3c2e0`
+
+---
+
+## 👋 Introduction  
+
+VANTA Platform is the **user-facing control plane** for the VANTA ecosystem.  
+Where **VANTA OS** is the autonomous brain, **VANTA Platform** productizes it — turning vaults, mirroring, and governance into a **subscription-based, investor-ready service**.  
+
+It handles:
+- Subscriptions & billing (Stripe + crypto)
+- Vault mirroring (custody-safe, manager→follower execution)
+- Entitlements & feature flags
+- Broker/webhook orchestration
+- API & dashboard endpoints for users, partners, and enterprises
+
+---
+
+## 📑 Table of Contents
+
+- [🌌 Overview](#-overview)
+- [👥 Tenancy & Personas](#-tenancy--personas)
+- [🧩 Core Components](#-core-components)
+- [🗂 Data Model](#-data-model)
+- [📡 API Surface](#-api-surface)
+- [⚙️ Mirroring Orchestrator](#-mirroring-orchestrator)
+- [₿ Deep Crypto Awareness](#-deep-crypto-awareness)
+- [🔑 Entitlements & Plans](#-entitlements--plans)
+- [🔒 Security & Governance](#-security--governance)
+- [📊 Observability & SLOs](#-observability--slos)
+- [💾 Storage Layout](#-storage-layout)
+- [🚀 Deployment & Isolation](#-deployment--isolation)
+- [🛡️ Failure Modes & Guards](#-failure-modes--guards)
+- [🔗 File ↔ Repo Mapping](#-file-↔-repo-mapping)
+- [💰 Pricing & Monetization](#-pricing--monetization)
+- [🛠 Roadmap](#-roadmap)
+- [📚 Glossary](#-glossary)
+- [🔗 Related Repositories](#-related-repositories)
+
+---
