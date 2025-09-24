@@ -417,3 +417,98 @@ VANTA Platform is designed with **institutional-grade security** — every mirro
 - Export-ready for regulators, external auditors, or institutional partners.  
 
 ---
+## 📈 Observability & SLOs
+
+VANTA Platform includes **full-stack observability** — so every mirrored trade, webhook, and entitlement can be traced, measured, and audited.
+
+### 📊 Metrics
+- `mirror.dispatch.latency_ms` → P50 / P95 dispatch latency  
+- `mirror.error.rate` → error ratio per vault/follower  
+- `broker.submit.success_rate` → broker adapter confirmation success %  
+- `webhook.retry.count` → retries per webhook/follower  
+
+### 📑 Logs
+- Structured JSON logs with correlation IDs `{mo_id, fo_id, follower_id}`.  
+- Dedicated `mirror_dispatch.log` for webhook delivery + retry cycles.  
+- All logs are immutable and rolled into object store daily.  
+
+### 🔍 Tracing
+- End-to-end tracing: `gateway → orchestrator → dispatcher → broker`.  
+- OpenTelemetry instrumentation for latency + error attribution.  
+- Visual dashboards (Grafana/Jaeger) for real-time visibility.  
+
+### 🎯 Service-Level Objectives (SLOs)
+- **Dispatch latency:** manager order → follower dispatch ≤ **2s (P95)**.  
+- **Webhook reliability:** success rate ≥ **99.5%** (with retries).  
+- **Audit durability:** 11x9s retention in object store (S3/MinIO).  
+- **Availability:** 99.9% uptime target for API + mirroring core.
+
+---
+
+## 🗄️ Storage Layout (Platform)
+
+The VANTA Platform is designed with **clear separation of state**, ensuring performance, reliability, and immutability across all components.
+
+### 📂 Postgres (authoritative state)
+- **Tenants** → org-level records, ownership, lifecycle.  
+- **Users** → identity, roles, OIDC subs.  
+- **Subscriptions** → Stripe state, entitlements JSON.  
+- **Vault metadata** → labels, rails, personas, configs.  
+- **Followers** → bindings, webhook URLs, kill switches.  
+- **Orders** → manager + follower orders, state machines.  
+- **Audit events** → immutable reference logs.
+
+### ⚡ Redis (short-lived state)
+- Idempotency keys for all POST/PATCH requests.  
+- In-flight order state (before confirmation).  
+- Rate-limit tokens (per IP, per user).  
+- Session caches for entitlement lookups.  
+
+### ☁️ Object Store (S3/MinIO)
+- Immutable artifacts (audit exports, trade_log.jsonl rollups).  
+- Daily vault snapshots.  
+- Replay bundles for regulator/investor inspection.  
+- Dead-letter queues (mirror_dispatch_dlx).  
+
+### 🔗 Bridges to OS
+- Reads directly from `/opt/vanta/memory/*.json` or via signed internal API.  
+- Cached locally for latency, refreshed on demand.  
+- Guarantees **OS → Platform determinism**: allocations flow into mirroring without drift.  
+
+---
+
+## 🚀 Deployment & Isolation
+
+The VANTA Platform runs as a **multi-service containerized stack** with strict isolation between environments and components.  
+The design prioritizes **HA (high availability)**, **low latency**, and **regulatory-grade auditability**.
+
+### 🛠️ Services
+- **API Gateway** → single ingress, WAF, TLS termination, JWT validation.  
+- **Core Services** → Auth, Subscriptions, Vault Registry, Mirroring Orchestrator, Webhook Dispatcher.  
+- **Adapters** → Broker adapters (Alpaca, Tradier, Coinbase, CEX/DEX bridges).  
+- **Data Services** → Postgres, Redis, Object Store (S3/MinIO).  
+
+### 🗂️ Namespaces & Environments
+- **Dev** → fast iteration, feature flags enabled.  
+- **Staging** → pre-production, mirrors prod infra but with shadow OS feeds.  
+- **Prod** → hardened with RBAC, network policies, Vault-injected secrets.  
+
+### 🔒 Network Isolation
+- **East-West traffic** → private VPC-only (services talk over gRPC/HTTPS inside).  
+- **Public ingress** → API Gateway only, behind Cloudflare WAF.  
+- **Webhook egress** → outbound-only, via controlled egress gateway with allowlist.  
+
+### 🌀 High Availability (HA)
+- Stateless services (API, Orchestrator, Dispatcher) run ≥2 replicas.  
+- Postgres in HA setup (primary + read replicas).  
+- Redis cluster with sentinel for failover.  
+- Object store with versioning and cross-region replication.  
+
+### 🧩 Disaster Recovery (DR)
+- PITR (point-in-time recovery) enabled for Postgres.  
+- Snapshots of Redis every 5 minutes; restore tested weekly.  
+- Object store replication across regions with lifecycle policies.  
+- Infra as Code (Terraform + Helm charts) ensures **reproducible infra** on rebuild.  
+
+---
+
