@@ -71,3 +71,64 @@ It handles:
 - [🔗 Related Repositories](#-related-repositories)
 
 ---
+
+## 🌌 Overview  
+
+The **VANTA Platform** is the **product layer** of the VANTA ecosystem.  
+It transforms the autonomous intelligence of **VANTA OS** into a **scalable, investor-ready platform** with subscriptions, mirroring, governance, and custody-safe execution.
+
+Key functions:  
+- **Subscriptions & Entitlements**  
+  - Tiered plans unlock vaults, personas, flip-mode access, and replay/audit features.  
+  - Billing managed via Stripe (fiat) and BTC (crypto).  
+
+- **Vault Mirroring**  
+  - Followers keep funds in their **own broker accounts**.  
+  - The platform mirrors manager vaults deterministically (proportional or capped).  
+  - Zero custody — VANTA never touches user capital.  
+
+- **Cross-Rail Capital**  
+  - Supports **fiat + crypto vaults**.  
+  - Routes USD⇄USDC⇄assets as part of execution intent.  
+
+- **Explainable Automation**  
+  - Every decision links to **reason vectors + audit logs**.  
+  - All actions are replayable for compliance and transparency.  
+
+- **Separation of Concerns**  
+  - **OS = brain** (signal → allocation → intent).  
+  - **Platform = productization** (subscriptions, mirroring, user experience).  
+
+> 💡 **Instead of selling signals, VANTA Platform productizes capital intelligence itself.**
+
+---
+
+## 👥 Tenancy & Personas  
+
+The VANTA Platform is designed as a **multi-tenant control plane**, separating roles, users, and mirroring participants with clear governance.  
+
+### Tenancy Model  
+- **Tenants** → one tenant per customer org (e.g., manager, enterprise client).  
+- **Users** → members of a tenant (roles: owner, ops, auditor).  
+- **Followers** → external user records tied to broker accounts (mirroring vaults).  
+
+### Personas (from OS layer)  
+- **Athena** → risk-averse, defensive allocator.  
+- **Apollo** → aggressive, growth-seeking allocator.  
+- **Ares** → contrarian, chaos-driven allocator.  
+- **Nemesis** → hedged, risk-balancing persona.  
+
+### Flip Mode  
+- Followers can temporarily enable **alternate execution branches**.  
+- Parameters:  
+  - TTL (time-to-live) enforced (e.g., 30–60 minutes).  
+  - Amplify factor (e.g., +0.35 weighting).  
+  - Auto-revert after TTL expiration.  
+
+### Why This Matters  
+- **Governed Access:** Tenancy ensures clean separation of orgs and roles.  
+- **Persona Diversity:** Followers gain differentiated exposure without code or models.  
+- **Safety Nets:** Flip Mode guarantees experiments are **bounded, reversible, and auditable**.  
+
+---
+
