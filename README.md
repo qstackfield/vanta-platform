@@ -511,4 +511,183 @@ The design prioritizes **HA (high availability)**, **low latency**, and **regula
 - Infra as Code (Terraform + Helm charts) ensures **reproducible infra** on rebuild.  
 
 ---
+## 🛡️ Failure Modes & Guards
 
+The VANTA Platform is designed with **resilience-first principles**: every failure path is anticipated, logged, and controlled with guardrails.  
+This ensures **determinism**, **safety for capital**, and **auditable recovery**.
+
+### ⚠️ Broker / Exchange Outages
+- Orders queue inside **Mirroring Orchestrator**.  
+- Retries with exponential backoff → 1s, 5s, 15s, 60s.  
+- If DLQ (dead-letter queue) reached, alerts raised to operator.  
+- Followers unaffected; NAV reconciliation runs once broker recovers.
+
+### 📡 Webhook Failures
+- **4xx responses** → no retry (treated as terminal error, flagged in audit).  
+- **5xx responses** → retried with backoff.  
+- All attempts logged in `mirror_dispatch.log` with correlation IDs.  
+- DLQ: `mirror_dispatch_dlx` ensures no intent is lost.
+
+### 🔄 Drift & Reconciliation
+- Periodic reconciliation compares **follower NAV vs manager NAV snapshot**.  
+- If divergence > threshold, auto-fix-up orders generated (within caps).  
+- Guarantees proportional mirroring even after missed orders or broker issues.
+
+### ⏱️ Flip Mode Expiry
+- Flip overlays always **time-bounded (TTL)**.  
+- On expiry → vault overlay reverts automatically to baseline allocation.  
+- Prevents indefinite high-risk allocations or chaos states.
+
+### 🚨 Kill Switches
+- **Vault-level:** `vault_overlay.maintenance.enabled=true` freezes dispatch globally.  
+- **Follower-level:** `kill_switch=true` disables a single follower instantly.  
+- Both enforceable via CLI or API (`PATCH /followers/{id}`).
+
+### 🧯 Rate Limits & Safety Nets
+- API Gateway → 60 RPM baseline per client, burstable at open.  
+- Protects against bot floods and abuse.  
+- Critical system calls require **Idempotency-Key headers** for replay safety.  
+
+---
+## 🌍 Public Webhook & API Specs
+
+The VANTA Platform exposes a **secure API surface** and **signed webhooks** so followers and partners can integrate safely.  
+All endpoints are idempotent, HMAC-signed, and fully audit-logged.
+
+### 🔑 Webhook Signatures
+- Every webhook is signed with **HMAC-SHA256** using a shared secret.  
+- Headers include:
+  - `X-Vanta-Timestamp` – request timestamp  
+  - `X-Vanta-Signature` – signed digest of (timestamp + body)  
+
+### 📡 Core API Routes
+
+**Followers**
+- `POST /v1/vaults/{vault_id}/followers` → register a follower  
+- `PATCH /v1/followers/{follower_id}` → update scale, caps, or kill switch  
+- `GET /v1/followers/{follower_id}/preview` → preview sizing on last NAV snapshot  
+
+**Vaults**
+- `GET /v1/vaults` → list available vaults  
+- `GET /v1/vaults/{vault_id}` → vault metadata & personas (redacted)  
+- `POST /v1/vaults/{vault_id}/overlay` → apply flip mode / persona boosts  
+
+**Orders**
+- `GET /v1/manager-orders?since=...` → stream manager intents  
+- `GET /v1/follower-orders?follower_id=...` → audit follower child orders  
+
+**Billing**
+- `GET /v1/subscriptions/me` → return active plan + entitlements  
+- `POST /v1/subscriptions/change-plan` → initiate Stripe checkout session  
+
+### 🔒 Security
+- All POST/PATCH routes require **Bearer JWT** + **Idempotency-Key** header.  
+- Webhook events expire if not processed within 5 minutes.  
+- Every request is written to `audit_events` with correlation IDs.  
+
+---
+## 🔄 End-to-End Mirroring (Manager → Followers)
+
+The VANTA Platform ensures every **manager order** is deterministically expanded into **child orders** across all followers, with full fairness, governance, and replayable audit trails.
+
+### Flow Overview
+
+Manager Orders → Mirroring Orchestrator → Follower Accounts
+
+1. Manager order generated (`autotrade_queue.json`)
+2. Orchestrator expands order to all registered followers
+3. Child orders sized by scale and capped per follower
+4. Orders dispatched via HMAC webhooks or broker adapters
+5. Fills confirmed, reconciled, and logged
+6. Full DAG (manager → child → fills) is persisted for replay
+
+### Key Properties
+- **Proportional** – followers mirror allocations fairly based on scale.  
+- **Capped** – per-position max enforced automatically.  
+- **Replayable** – logs enable complete reconstruction.  
+- **Safe** – kill switches + persona overlays respected.  
+- **Transparent** – every step visible to auditors and partners.  
+
+---
+
+## 💰 Pricing & Monetization
+
+VANTA Platform is designed with **aligned incentives** — we only succeed when our users and followers succeed.
+
+### Revenue Streams
+- **Performance Fees**  
+  - % of profits (with high-water marks for fairness).  
+  - Transparent: followers see PnL vs fees side-by-side.  
+
+- **Subscription Plans**  
+  - Core, Pro, and Institutional tiers.  
+  - Unlocks vaults, personas, flip-mode, and audit dashboards.  
+
+- **Institutional Add-Ons**  
+  - Dedicated feeds, latency SLAs, custom adapters.  
+  - Priority support and private vault strategies.  
+
+### Fee Model Principles
+- **Alignment:** no “pay for hype” — fees tied to actual capital outcomes.  
+- **Transparency:** every fee logged alongside performance.  
+- **Scalability:** works from a single retail follower to thousands of mirrored accounts.  
+
+---
+## 🛣️ Roadmap
+
+The VANTA Platform is continuously evolving to push the frontier of autonomous capital intelligence.
+
+### Near-Term
+- White-label follower portal with self-serve onboarding.  
+- Broker linking via secure API packets (Alpaca, Coinbase, Tradier).  
+- Multi-vault persona strategies (Athena, Apollo, Ares).  
+- Real-time dashboards for conviction bands & attribution.  
+
+### Mid-Term
+- Multi-region webhook PoPs for low-latency mirroring.  
+- Federated policies for institutional tenants (custom caps & personas).  
+- Replay Studio: follower-level “what-if” backtests on historic orders.  
+
+### Long-Term
+- Fully autonomous capital marketplace: vault managers + followers at scale.  
+- Cross-rail liquidity routing (fiat ⇄ stablecoins ⇄ crypto ⇄ equities).  
+- Partner vaults & institutional integrations with SLA governance.  
+
+---
+## 📖 Glossary
+
+- **Vault** → Capital container with encoded risk rails, allocations, personas, and compounding rules.  
+- **Follower** → External account (broker/crypto) that mirrors a vault under proportional or capped rules.  
+- **Persona** → Named reasoning lens (e.g., Athena, Apollo, Ares) that biases allocations and strategy overlays.  
+- **Flip Mode** → Short-TTL alternate execution path with amplified risk/reward, auto-reverts on expiry.  
+- **Entitlement** → Feature rights tied to a subscription plan (e.g., access to vaults, flip mode, replay dashboards).  
+- **Mirroring Orchestrator** → Engine that transforms manager orders into deterministic child orders for followers.  
+- **Overlay** → Runtime adjustments applied to vaults (maintenance, persona boosts, flip branches).  
+- **Audit DAGs** → Append-only logs that capture the full path: signal → conviction → allocation → trade → mirror.  
+- **Manager Order** → Primary trade intent emitted by a vault.  
+- **Child Order** → Scaled order dispatched to a follower based on mode and caps.  
+- **Bridge** → Cross-rail capital routing logic (e.g., USD ⇄ USDC ⇄ BTC).  
+- **Replay Studio** → Planned feature allowing historical “what-if” simulation for followers on past cycles.  
+
+---
+## 🚀 Why This Is From the Future
+
+VANTA Platform is not an incremental tool — it’s a **new category of financial infrastructure**.  
+
+- **Deterministic Mirroring** → Every follower sees the exact proportional intent, with auditable DAGs.  
+- **Crypto-Aware Capital Routing** → Native support for USD ⇄ stablecoins ⇄ crypto execution.  
+- **Separation of Concerns** → VANTA OS generates intent; VANTA Platform productizes it safely at scale.  
+- **Governance by Design** → Kill-switches, caps, persona overlays, and flip-mode ensure safety.  
+- **Replayable Autonomy** → Any order, vault, or follower path can be reconstructed for compliance or learning.  
+
+> **This isn’t a bot. It’s the operating system capital markets will run on.**  
+
+---
+
+## 🔗 Explore More  
+
+- **[VANTA OS – Autonomous Capital Intelligence Stack](https://github.com/qstackfield/vanta-capital-intelligence-os)**  
+  Technical deep dive into the intelligence engine, vault logic, architecture, and server mapping.  
+
+- **[VANTA Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/)**  
+  High-level overview of the VANTA vision, value proposition, and funding opportunities.  
