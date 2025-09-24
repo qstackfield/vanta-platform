@@ -154,3 +154,38 @@ The VANTA Platform control plane is composed of modular services:
   - S3/Minio → immutable artifacts, logs, and exports.  
 
 ---
+
+---
+
+## 🗂 Data Model  
+
+The VANTA Platform persists state across Postgres, Redis, and object storage. Core tables and their purpose:
+
+- **tenants**  
+  - `tenant_id (uuid)` · `name` · `created_at` · `status`  
+
+- **users**  
+  - `user_id (uuid)` · `tenant_id` · `email` · `role (owner|ops|auditor)` · `oidc_sub`  
+
+- **subscriptions**  
+  - `subscription_id` · `tenant_id` · `plan_id` · `status` · `entitlements (jsonb)` · `renewal_at`  
+
+- **vaults**  
+  - `vault_id` · `tenant_id (manager)` · `label` · `rails {fiat,crypto}` · `personas[]` · `risk_profile (jsonb)` · `public (bool)`  
+
+- **followers**  
+  - `follower_id` · `tenant_id (manager)` · `vault_id` · `mode (proportional|capped|shadow)`  
+  - `scale (decimal)` · `max_pos_usd (decimal)` · `kill_switch (bool)`  
+  - `webhook {url,hmac_key_ref}` OR `bridged_brokers {equities_ref, crypto_ref}`  
+
+- **manager_orders**  
+  - `mo_id` · `vault_id` · `symbol` · `venue` · `side` · `qty` · `tif` · `meta (jsonb)` · `state` · `created_at`  
+
+- **follower_orders**  
+  - `fo_id` · `mo_id` · `follower_id` · `symbol` · `qty` · `cap_applied (bool)` · `state` · `broker_order_ref`  
+  - `dispatch_attempts` · `last_error` · `audit (jsonb)`  
+
+- **audit_events**  
+  - `event_id` · `entity (manager_order|follower_order|vault|subscription)` · `actor` · `payload (jsonb)` · `ts`  
+
+---
