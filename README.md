@@ -56,7 +56,7 @@ It handles:
 - [👥 Tenancy & Personas](#-tenancy--personas)  
 - [🧩 Platform Components](#-platform-components)  
 - [🗂 Data Model](#-data-model)  
-- [🔌 API Surface](#-api-surface)  
+- [🔌 API Surface](#-api-surface-selected)  
 - [🔄 Mirroring Orchestrator](#-mirroring-orchestrator-state-machine)  
 - [🌐 Deep Crypto Awareness](#-deep-crypto-awareness)  
 - [📜 Entitlements & Plans](#-entitlements--plans)  
