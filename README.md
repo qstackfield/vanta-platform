@@ -278,7 +278,6 @@ The VANTA Platform persists state across Postgres, Redis, and object storage. Co
   "retail_sentiment_spike"
 ]
 }
-
 ---
 ## 🔄 Mirroring Orchestrator (State Machine)
 
