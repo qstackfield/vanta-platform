@@ -132,3 +132,17 @@ The VANTA Platform is designed as a **multi-tenant control plane**, separating r
 
 ---
 
+## 🧩 Platform Components  
+
+The VANTA Platform control plane is built from modular services — each focused on one responsibility.  
+
+### High-Level Architecture  
+
+             ┌──────────────────────────┐
+             │        Web App (Next)    │
+             └─────────────┬────────────┘
+                           │
+                  ┌────────▼────────┐
+                  │  API Gateway    │  (OIDC/JWT, rate-limit, idempotency)
+                  └─────┬─────┬─────┘
+     ┌──────────────────┘     └───────────────────┐
