@@ -189,45 +189,43 @@ The VANTA Platform persists state across Postgres, Redis, and object storage. Co
   - `event_id` · `entity (manager_order|follower_order|vault|subscription)` · `actor` · `payload (jsonb)` · `ts`  
 
 ---
-
----
-
 ## 🔌 API Surface (selected)
 
 ### Auth
-- **POST /v1/auth/token** → OIDC code-exchange (handled by gateway).  
-- **Scopes**:  
-  - `vault:read`  
-  - `mirror:manage`  
-  - `orders:read`  
-  - `follower:manage`  
-  - `billing:read`  
+- **POST** `/v1/auth/token` → OIDC code-exchange (handled by gateway).
+- **Scopes**:
+  - `vault:read`
+  - `mirror:manage`
+  - `orders:read`
+  - `follower:manage`
+  - `billing:read`
 
 ---
 
 ### Vaults
-- **GET /v1/vaults** → list visible vaults (entitlement filtered).  
-- **GET /v1/vaults/{vault_id}** → metadata + risk + personas (redacted).  
-- **POST /v1/vaults/{vault_id}/overlay** → apply flip mode/persona boosts (TTL enforced).  
+- **GET** `/v1/vaults` → list visible vaults (entitlement filtered).  
+- **GET** `/v1/vaults/{vault_id}` → metadata + risk + personas (redacted).  
+- **POST** `/v1/vaults/{vault_id}/overlay` → apply flip mode/persona boosts (**TTL enforced**).  
 
 ---
 
 ### Followers & Mirroring
-- **POST /v1/vaults/{vault_id}/followers** → register follower (webhook or bridged).  
-- **PATCH /v1/followers/{follower_id}** → update caps/scale/kill_switch.  
-- **GET /v1/followers/{follower_id}/preview?asof=...** → sizing preview based on latest NAV.  
-- **GET /v1/manager-orders?since=...** → read manager intents.  
-- **GET /v1/follower-orders?follower_id=...&since=...** → audit child orders.  
+- **POST** `/v1/vaults/{vault_id}/followers` → register follower (webhook or bridged).  
+- **PATCH** `/v1/followers/{follower_id}` → update caps/scale/kill_switch.  
+- **GET** `/v1/followers/{follower_id}/preview?asof=…` → sizing preview based on latest NAV.  
+- **GET** `/v1/manager-orders?since=…` → read manager intents.  
+- **GET** `/v1/follower-orders?follower_id=…&since=…` → audit child orders.  
 
 ---
 
 ### Webhooks (follower-side)
-- **POST /v1/hooks/mirror/dispatch** → HMAC signed delivery.  
-- **Headers:**  
-  - `X-Vanta-Signature: sha256=HEX`  
-  - `X-Vanta-Timestamp`  
-- **Body Example:**
+- **POST** `/v1/hooks/mirror/dispatch` → HMAC signed delivery.  
 
+**Headers:**  
+`X-Vanta-Signature: sha256=HEX`  
+`X-Vanta-Timestamp: <unix epoch>`  
+
+**Body Example:**  
 ```json
 {
   "ts": "2025-05-27T22:09:00Z",
@@ -237,5 +235,8 @@ The VANTA Platform persists state across Postgres, Redis, and object storage. Co
   "side": "buy",
   "qty": 7,
   "time_in_force": "day",
-  "meta": {"manager_order_id": "M-98421","band":"A"}
+  "meta": {
+    "manager_order_id": "M-98421",
+    "band": "A"
+  }
 }
