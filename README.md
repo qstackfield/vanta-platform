@@ -132,8 +132,6 @@ The VANTA Platform is designed as a **multi-tenant control plane**, separating r
 
 ---
 
----
-
 ## 🧩 Platform Components  
 
 The VANTA Platform control plane is composed of modular services:  
@@ -152,8 +150,6 @@ The VANTA Platform control plane is composed of modular services:
   - Postgres → tenants, users, vaults, followers, audit logs.  
   - Redis → idempotency keys and in-flight state.  
   - S3/Minio → immutable artifacts, logs, and exports.  
-
----
 
 ---
 
@@ -189,6 +185,7 @@ The VANTA Platform persists state across Postgres, Redis, and object storage. Co
   - `event_id` · `entity (manager_order|follower_order|vault|subscription)` · `actor` · `payload (jsonb)` · `ts`  
 
 ---
+
 ## 🔌 API Surface (selected)
 
 ### Auth
@@ -280,7 +277,7 @@ The VANTA Platform persists state across Postgres, Redis, and object storage. Co
 }
 ```
 ---
----
+
 ## 🔄 Mirroring Orchestrator (State Machine)
 
 The **Mirroring Orchestrator** is the control loop that transforms manager vault orders into **deterministic child orders** across all followers.  
@@ -382,7 +379,6 @@ These entitlements are pushed as feature flags to the API/UI and verified server
 - Stored as `jsonb` in `subscriptions` table with feature-level granularity.  
 - Validated on every call — **no client-side trust**.  
 
----
 ---
 ## 🔐 Security & Governance
 
@@ -612,7 +608,7 @@ Manager Orders → Mirroring Orchestrator → Follower Accounts
 
 ## 💰 Pricing & Monetization
 
-VANTA Platform is designed with **aligned incentives** — we only succeed when our users and followers succeed.
+VANTA Platform is designed with **aligned incentives** - we only succeed when our users and followers succeed.
 
 ### Revenue Streams
 - **Performance Fees**  
@@ -672,7 +668,7 @@ The VANTA Platform is continuously evolving to push the frontier of autonomous c
 ---
 ## 🚀 Why This Is From the Future
 
-VANTA Platform is not an incremental tool — it’s a **new category of financial infrastructure**.  
+VANTA Platform is not an incremental tool - it’s a **new category of financial infrastructure**.  
 
 - **Deterministic Mirroring** → Every follower sees the exact proportional intent, with auditable DAGs.  
 - **Crypto-Aware Capital Routing** → Native support for USD ⇄ stablecoins ⇄ crypto execution.  
@@ -686,7 +682,7 @@ VANTA Platform is not an incremental tool — it’s a **new category of financi
 
 ## 🔗 Explore More  
 
-- **[VANTA OS – Autonomous Capital Intelligence Stack](https://github.com/qstackfield/vanta-capital-intelligence-os)**  
+- **[VANTA OS - Autonomous Capital Intelligence Stack](https://github.com/qstackfield/vanta-capital-intelligence-os)**  
   Technical deep dive into the intelligence engine, vault logic, architecture, and server mapping.  
 
 - **[VANTA Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/)**  
