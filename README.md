@@ -382,7 +382,7 @@ These entitlements are pushed as feature flags to the API/UI and verified server
 ---
 ## 🔐 Security & Governance
 
-VANTA Platform is designed with **institutional-grade security** — every mirrored trade, webhook, and entitlement is protected and auditable.
+VANTA Platform is designed with **institutional-grade security** - every mirrored trade, webhook, and entitlement is protected and auditable.
 
 ### 🔑 Authentication
 - **OIDC (Auth0/Okta/Keycloak)** for all tenants.  
@@ -415,7 +415,7 @@ VANTA Platform is designed with **institutional-grade security** — every mirro
 ---
 ## 📈 Observability & SLOs
 
-VANTA Platform includes **full-stack observability** — so every mirrored trade, webhook, and entitlement can be traced, measured, and audited.
+VANTA Platform includes **full-stack observability** - so every mirrored trade, webhook, and entitlement can be traced, measured, and audited.
 
 ### 📊 Metrics
 - `mirror.dispatch.latency_ms` → P50 / P95 dispatch latency  
