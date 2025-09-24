@@ -164,55 +164,6 @@ The VANTA Platform control plane is composed of modular services:
 
 ---
 
-## 📊 Platform Architecture — VANTA Platform  
-The **VANTA Platform** is the **user-facing layer**. It turns OS intelligence into subscriptions, vault mirroring, and governed execution.  
-
-```mermaid
-flowchart LR
-  subgraph Users
-    T[Tenants (Managers)]
-    F[Followers (Mirrorers)]
-    S[Subscribers (Stripe, BTC)]
-  end
-
-  subgraph ControlPlane
-    A[AuthN/Z (OIDC, RBAC)]
-    B[Subscription Service (Stripe)]
-    VR[Vault Registry (refs from OS)]
-    EN[Entitlement Engine (Plans, Personas, Flip)]
-  end
-
-  subgraph Orchestrator
-    MO[Mirroring Orchestrator]
-    WD[Webhook Dispatcher (HMAC)]
-    BA[Broker Adapters (Alpaca, Coinbase, Tradier)]
-  end
-
-  subgraph DataPlane
-    OS[OS Outputs (Signals)]
-    DL[Audit Logs (Replayable)]
-  end
-
-  subgraph FollowerAccounts
-    FB[Broker Accounts (Equities, Crypto)]
-  end
-
-  %% Flows
-  S --> B
-  T --> EN
-  EN --> MO
-  MO --> WD --> FB
-  MO --> BA --> FB
-  OS --> VR --> MO
-  MO --> DL
-
-  %% Styling
-  style Users fill:#e0f7fa,stroke:#006064,stroke-width:2px
-  style ControlPlane fill:#f1f8e9,stroke:#33691e,stroke-width:2px
-  style Orchestrator fill:#fff3e0,stroke:#e65100,stroke-width:2px
-  style DataPlane fill:#ede7f6,stroke:#4527a0,stroke-width:2px
-  style FollowerAccounts fill:#fce4ec,stroke:#880e4f,stroke-width:2px
-
 ## 🗂 Data Model  
 
 The VANTA Platform persists state across Postgres, Redis, and object storage. Core tables and their purpose:
