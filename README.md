@@ -272,12 +272,11 @@ The VANTA Platform persists state across Postgres, Redis, and object storage. Co
     "collector": "reddit_stealth.py",
     "enriched_at": "2025-05-27T22:08:32Z",
     "os_node": "Markets",
-    "features_used": [
-      "insider_cluster_embedding",
-      "darkpool_flow_score",
-      "retail_sentiment_spike"
-    ]
-  }
+"features_used": [
+  "insider_cluster_embedding",
+  "darkpool_flow_score",
+  "retail_sentiment_spike"
+]
 }
 ---
 ## 🔄 Mirroring Orchestrator (State Machine)
