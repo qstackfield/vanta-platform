@@ -2,6 +2,12 @@
   <img src="https://i.postimg.cc/QdV16pcB/IMG-4837.jpg" alt="VANTA Platform Banner" width="90%" />
 </p>
 
+## 👋 New to VANTA?
+
+- 📖 Start with the [Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/) for a high-level overview.  
+- 💻 Looking for subscriptions & vault mirroring? Go to the [VANTA Platform Repository](https://github.com/qstackfield/vanta-platform).  
+- 💬 All design, roadmap, and Q&A are open → [Join the VANTA Discussions](../../discussions).  
+
 <p align="center">
   <strong>VANTA Platform – Subscriptions & Vault Mirroring</strong><br>
   <em>The user-facing layer for governed, replayable autonomous capital.</em>
