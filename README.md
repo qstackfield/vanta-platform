@@ -11,8 +11,8 @@
 ---
 
 <h1 align="center">
-  <strong>VANTA Platform - Subscriptions & Vault Mirroring</strong><br>
-  <em>The user-facing layer for governed, replayable autonomous capital.</em>
+  <strong>VANTA Platform – Subscriptions & Vault Mirroring</strong><br>
+  <sub><em>The user-facing layer for governed, replayable autonomous capital.</em></sub>
 </h1>
 
 <p align="center">
