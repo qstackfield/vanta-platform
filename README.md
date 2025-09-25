@@ -705,3 +705,13 @@ VANTA Platform is not an incremental tool - it’s a **new category of financial
 
 - **[VANTA Investor Landing Page](https://qstackfield.github.io/vanta-capital-intelligence-os/)**  
   High-level overview of the VANTA vision, value proposition, and funding opportunities.  
+
+  ---
+
+## 📬 Access
+
+This repo is the public-facing build journal - curated nights, structured notes.  
+There’s also a deeper layer of extended notes and raw fragments.  
+
+If you want in:  
+[![Request Access](https://img.shields.io/badge/Request-Access-blue?style=for-the-badge&logo=github)](../../issues/new?template=access-request.md)
